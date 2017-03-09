@@ -1,5 +1,5 @@
 # Tensorflow-LSTM
-[Description]
+<p>[Description]</p>
 This repo use LSTM cell to train Jin-Yong novel, which is written by famous Chinese novelist. 
 
 
