@@ -1,5 +1,5 @@
 # Tensorflow-LSTM
-<p>[Description]</p>  
+# Description   
 I am new to tensorflow and RNN. This is my practice to understand the LSTM and the usage of tensorflow. 
 
 This repo use LSTM cell to train Jin-Yong novel, which is written by famous Chinese novelist. I choose character-level language as model and generate a short paragraph to see if it works well or not.  
