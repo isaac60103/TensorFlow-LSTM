@@ -1,18 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
 
-"""
-Imports
-"""
 import numpy as np
 import tensorflow as tf
 import time
 import os
 
 
-"""
-Read File
-"""
 #file_name = "total.txt"
 #with open(file_name,'r') as f:
 #    raw_data =  f.read()
@@ -152,7 +146,7 @@ def buildGraph(
 #losses = train_network(g, 800, num_steps=140, save="saves/lstm_result")
 #print("The average loss on the final epoch was:", losses[-1])
 #
-def generate_characters(g, checkpoint, num_chars, prompt, pick_top_chars=None):
+def generateCharacters(g, checkpoint, num_chars, prompt, pick_top_chars=None):
     """ Accepts a current character, initial state"""
 
     with tf.Session() as sess:
@@ -204,8 +198,8 @@ def createDir(directory):
 def readTrainFile(training_file):
     
     with open(training_file,'r') as f:
-    raw_data =  f.read()
-    raw_data = unicode(raw_data, 'utf8')
+        raw_data =  f.read()
+        raw_data = unicode(raw_data, 'utf8')
 
     global vocab = set(raw_data)
     global vocab_size = len(vocab)
@@ -217,6 +211,7 @@ def readTrainFile(training_file):
     print("Total data length:", len(raw_data))
 
     del raw_data
+    return
 
 def main():
         parser = argparse.ArgumentParser(
@@ -236,8 +231,6 @@ def main():
     help="batch size")
     parser.add_argument("--state_size", type=int, default=256,
     help="state_size")
-    parser.add_argument("-s", "--save_checkpoint", type=str, default="saves",
-    help="path of saved checkpoint")
     parser.add_argument("-i", "--input", type=str,
     help="training file")
     parser.add_argument("-o", "--output",type=str,
@@ -263,13 +256,20 @@ def main():
         losses = trainNetwork(g, args.num_epochs, args.num_time_steps, args.batch_size, verbose = True, save="saves/lstm_result"):
         print('Training Finish!')
 
+        g = buildGraph(
+            num_steps=1, 
+            num_layers=args.layers, 
+            state_size=args.state_size, 
+            batch_size=1, 
+            learning_rate=args.learning_rate, 
+            num_class=vocab_size)
+
+        generateCharacters(g, "saves/lstm_result", 750, prompt=u'楊', pick_top_chars=5)
+
     else:
         print('Predicting ......')
-        g = buildGraph( num_steps=1, batch_size=1)
-        generate_characters(g, "saves/lstm_result", 750, prompt=u'楊', pick_top_chars=5)
-
-
-
+#        g = buildGraph( num_steps=1, batch_size=1)
+        generateCharacters(g, "saves/lstm_result", 750, prompt=u'楊', pick_top_chars=5)
 
 if __name__ == "__main__":
     main()
