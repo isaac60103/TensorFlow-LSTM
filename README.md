@@ -1,20 +1,20 @@
 # Tensorflow-LSTM
-# Description   
-I am new to tensorflow and RNN. This is my practice to understand the LSTM and the usage of tensorflow. 
+**Description**   
+This is my practice to understand LSTM and usage of tensorflow. 
 
-This repo use LSTM cell to train Jin-Yong novel, which is written by famous Chinese novelist. I choose character-level language as model and generate a short paragraph to see if it works well or not.  
-
-
-[How to use]
+The repo use LSTM cell to train Jin-Yong novel, which is written by famous Chinese novelist. I choose character-level language as model and generate a short paragraph to see if it works well or not.  
 
 
-[Configuration]
+**  How to use**  
+
+
+**  Configuration**  
 
 
 
-[Experiment Result]
+**  Experiment Result**  
 
-[Reference]
+**  Reference**  
 I reference a lot of document to implement this code. Here are some of documents that is highly recommended if you are interested in RNN
 
 http://karpathy.github.io/2015/05/21/rnn-effectiveness/
