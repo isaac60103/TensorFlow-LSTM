@@ -21,7 +21,7 @@ python char_rnn.py -m train -t 100 -l 3 --num_epochs 20 -i data/romance_condor_h
 python char_rnn.py -m generate -i data/romance_condor_heroes.txt
 ```
 
-### Default parameters (if not specify):
+### Default parameters (if not specify)
 * mode = train  
 * number of time steps = 100  
 * number of layers = 3  
@@ -57,19 +57,19 @@ python char_rnn.py -h
 I reference a lot of documents. Here are some of them that is highly recommended if you are interested in RNN.
 
 ### Papers
-[Long Short-Term Memory][1]  
-[Learning to Forget: Continual Prediction with LSTM][2]  
-[An Empirical Exploration of Recurrent Network Architectures][3]  
-[LSTM: A Search Space Odyssey][4]  
-[On the Computational Power of Neral Nets][5]  
-[Neural Turing Machines][6]  
+* [Long Short-Term Memory][1]  
+* [Learning to Forget: Continual Prediction with LSTM][2]  
+* [An Empirical Exploration of Recurrent Network Architectures][3]  
+* [LSTM: A Search Space Odyssey][4]  
+* [On the Computational Power of Neral Nets][5]  
+* [Neural Turing Machines][6]  
 
 ### Blogs
-[The Unreasonable Effectiveness of Recurrent Neural Networks (Andrej Karpathy blog)][7]  
-[Understanding LSTM Networks (colah's blog)][8]  
-[Recurrent Neural Networks in Tensorflow (R2RT blog)][9]  
-[Written Memories: Understanding, Deriving and Extending the LSTM (R2RT blog)][10]  
-[Recurrent Neural Networks Tutorial (WildML blog)][11]
+* [The Unreasonable Effectiveness of Recurrent Neural Networks (Andrej Karpathy blog)][7]  
+* [Understanding LSTM Networks (colah's blog)][8]  
+* [Recurrent Neural Networks in Tensorflow (R2RT blog)][9]  
+* [Written Memories: Understanding, Deriving and Extending the LSTM (R2RT blog)][10]  
+* [Recurrent Neural Networks Tutorial (WildML blog)][11]
 
 [1]: http://isle.illinois.edu/sst/meetings/2015/hochreiter-lstm.pdf
 [2]: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.55.5709&rep=rep1&type=pdf 
