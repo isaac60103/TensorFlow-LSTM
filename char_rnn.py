@@ -226,7 +226,7 @@ def main():
     description="",
     )
     parser.add_argument("-m", "--mode", type=str, default="train",
-    help="train mode or predict")
+    help="train mode or generate mode")
     parser.add_argument("-t", "--num_time_steps", type=int, default=100,
     help="number of time steps")
     parser.add_argument("-l", "--layers", type=int, default=3,
@@ -246,7 +246,7 @@ def main():
     parser.add_argument("-i", "--input", type=str,
     help="training file")
     parser.add_argument("-o", "--output",type=str,
-    help="output predict result")
+    help="output result")
 
     args = parser.parse_args()
 
@@ -280,7 +280,7 @@ def main():
         generateCharacters(g, "saves/lstm_result", args.num_chars, prompt=u'楊', pick_top_chars=args.pick_top_chars)
 
     else:
-        print('Predicting ......')
+        print('Generating ......')
 
         num_layers, state_size, vocab_size = getConfig("saves")
         readTargetFile(args.input)
