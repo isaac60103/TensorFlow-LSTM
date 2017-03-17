@@ -5,21 +5,13 @@ import numpy as np
 import tensorflow as tf
 import time
 import os
+import argparse
 
-
-#file_name = "total.txt"
-#with open(file_name,'r') as f:
-#    raw_data =  f.read()
-#    raw_data = unicode(raw_data, 'utf8')
-#    print("Data length:", len(raw_data))
-#
-#vocab = set(raw_data)
-#vocab_size = len(vocab)
-#idx_to_vocab = dict(enumerate(vocab))
-#vocab_to_idx = dict(zip(idx_to_vocab.values(), idx_to_vocab.keys()))
-#
-#data = [vocab_to_idx[c] for c in raw_data]
-#del raw_data
+vocab = None
+vocab_size = None
+idx_to_vocab = None
+vocab_to_idx = None
+data = None
 
 def ptb_iterator(raw_data, batch_size, num_steps):
     """Iterate on the raw PTB data.
@@ -92,13 +84,7 @@ def trainNetwork(g, num_epochs, num_steps = 100, batch_size = 64, verbose = True
 
     return training_losses
 
-def buildGraph(
-    state_size = 512,
-    num_classes = vocab_size,
-    batch_size = 64,
-    num_steps = 100,
-    num_layers = 3,
-    learning_rate = 0.001):
+def buildGraph( state_size, num_classes, batch_size, num_steps, num_layers, learning_rate):
 
     resetGraph()
 
@@ -141,16 +127,11 @@ def buildGraph(
     )
 
 
-#g = build_graph(num_steps=140, num_layers=3)
-#t = time.time()
-#losses = train_network(g, 800, num_steps=140, save="saves/lstm_result")
-#print("The average loss on the final epoch was:", losses[-1])
-#
 def generateCharacters(g, checkpoint, num_chars, prompt, pick_top_chars=None):
     """ Accepts a current character, initial state"""
 
     with tf.Session() as sess:
-        sess.run(tf.initialize_all_variables())
+        sess.run(tf.global_variables_initializer())
         g['saver'].restore(sess, checkpoint)
 
         state = None
@@ -179,17 +160,6 @@ def generateCharacters(g, checkpoint, num_chars, prompt, pick_top_chars=None):
     print("".join(chars))
     return("".join(chars))
 
-
-
-#g = build_graph( num_steps=1, batch_size=1)
-#generate_characters(g, "saves/lstm_result", 750, prompt=u'楊', pick_top_chars=5)
-vocab = None
-vocab_size = None
-idx_to_vocab = None
-vocab_to_idx = None
-data = None
-
-
 def createDir(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
@@ -201,12 +171,18 @@ def readTrainFile(training_file):
         raw_data =  f.read()
         raw_data = unicode(raw_data, 'utf8')
 
-    global vocab = set(raw_data)
-    global vocab_size = len(vocab)
-    global idx_to_vocab = dict(enumerate(vocab))
-    global vocab_to_idx = dict(zip(idx_to_vocab.values(), idx_to_vocab.keys()))
+    global vocab
+    global vocab_size 
+    global idx_to_vocab
+    global vocab_to_idx
+    global data
 
-    global data = [vocab_to_idx[c] for c in raw_data]
+    vocab = set(raw_data)
+    vocab_size = len(vocab)
+    idx_to_vocab = dict(enumerate(vocab))
+    vocab_to_idx = dict(zip(idx_to_vocab.values(), idx_to_vocab.keys()))
+
+    data = [vocab_to_idx[c] for c in raw_data]
 
     print("Total data length:", len(raw_data))
 
@@ -214,12 +190,13 @@ def readTrainFile(training_file):
     return
 
 def main():
-        parser = argparse.ArgumentParser(
-        description="",
+
+    parser = argparse.ArgumentParser(
+    description="",
     )
     parser.add_argument("-m", "--mode", type=str, default=None,
     help="train mode or predict")
-    parser.add_argument("-t", "--num_time_steps", type=str, default="100",
+    parser.add_argument("-t", "--num_time_steps", type=int, default=100,
     help="number of time steps")
     parser.add_argument("-l", "--layers", type=int, default=3,
     help="number of layers")
@@ -231,6 +208,8 @@ def main():
     help="batch size")
     parser.add_argument("--state_size", type=int, default=256,
     help="state_size")
+    parser.add_argument("-p", "--pick_top_chars", type=int, default=5,
+    help="pick number of top probability of chars")
     parser.add_argument("-i", "--input", type=str,
     help="training file")
     parser.add_argument("-o", "--output",type=str,
@@ -245,15 +224,16 @@ def main():
         createDir('saves')
         readTrainFile(args.input)
 
+        global vocab_size 
         g = buildGraph(
             num_steps=args.num_time_steps, 
             num_layers=args.layers, 
             state_size=args.state_size, 
             batch_size=args.batch_size, 
             learning_rate=args.learning_rate, 
-            num_class= vocab_size)
+            num_classes= vocab_size)
 
-        losses = trainNetwork(g, args.num_epochs, args.num_time_steps, args.batch_size, verbose = True, save="saves/lstm_result"):
+        losses = trainNetwork(g, args.num_epochs, args.num_time_steps, args.batch_size, verbose = True, save="saves/lstm_result")
         print('Training Finish!')
 
         g = buildGraph(
@@ -262,14 +242,14 @@ def main():
             state_size=args.state_size, 
             batch_size=1, 
             learning_rate=args.learning_rate, 
-            num_class=vocab_size)
+            num_classes=vocab_size)
 
-        generateCharacters(g, "saves/lstm_result", 750, prompt=u'楊', pick_top_chars=5)
+        generateCharacters(g, "saves/lstm_result", 750, prompt=u'楊', pick_top_chars=args.pick_top_chars)
 
     else:
         print('Predicting ......')
 #        g = buildGraph( num_steps=1, batch_size=1)
-        generateCharacters(g, "saves/lstm_result", 750, prompt=u'楊', pick_top_chars=5)
+        generateCharacters(g, "saves/lstm_result", 750, prompt=u'楊', pick_top_chars=args.pick_top_chars)
 
 if __name__ == "__main__":
     main()
