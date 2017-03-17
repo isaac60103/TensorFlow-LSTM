@@ -3,9 +3,9 @@
 
 import numpy as np
 import tensorflow as tf
-import time
 import os
 import argparse
+import re
 
 vocab = None
 vocab_size = None
@@ -127,6 +127,25 @@ def buildGraph( state_size, num_classes, batch_size, num_steps, num_layers, lear
     )
 
 
+def saveConfig(path, num_time_steps, layers, state_size, vocab_size):
+
+    f = open(path+'/network_config', 'w')
+
+    f.write("number of time steps: ")
+    f.write(str(num_time_steps)+"\n")
+    f.write("number of layers: ")
+    f.write(str(layers)+"\n")
+    f.write("state size: ")
+    f.write(str(state_size)+"\n")
+    f.write("number of vocab size: ")
+    f.write(str(vocab_size)+"\n")
+
+    f.close()
+
+    return
+
+
+
 def generateCharacters(g, checkpoint, num_chars, prompt, pick_top_chars=None):
     """ Accepts a current character, initial state"""
 
@@ -165,7 +184,7 @@ def createDir(directory):
         os.makedirs(directory)
     return
 
-def readTrainFile(training_file):
+def readTargetFile(training_file):
     
     with open(training_file,'r') as f:
         raw_data =  f.read()
@@ -188,6 +207,18 @@ def readTrainFile(training_file):
 
     del raw_data
     return
+
+def getConfig(path):
+
+    f = open(path+'/network_config', 'r')
+    num_time_steps = re.findall(r'\d+',f.readline())[0]
+    num_layers = re.findall(r'\d+',f.readline())[0]
+    state_size = re.findall(r'\d+',f.readline())[0]
+    vocab_size = re.findall(r'\d+',f.readline())[0]
+
+    f.close()
+    return int(num_layers), int(state_size), int(vocab_size)
+    
 
 def main():
 
@@ -214,17 +245,17 @@ def main():
     help="training file")
     parser.add_argument("-o", "--output",type=str,
     help="output predict result")
-    #parser.add_argument("--consolidated", action="store_true",
-    #help="consolidate all result in one single file")
 
     args = parser.parse_args()
+
+    global vocab_size 
 
     if args.mode == 'train':
         print('Training ......')
         createDir('saves')
-        readTrainFile(args.input)
+        readTargetFile(args.input)
+        saveConfig("saves", args.num_time_steps, args.layers, args.state_size, vocab_size)
 
-        global vocab_size 
         g = buildGraph(
             num_steps=args.num_time_steps, 
             num_layers=args.layers, 
@@ -248,7 +279,16 @@ def main():
 
     else:
         print('Predicting ......')
-#        g = buildGraph( num_steps=1, batch_size=1)
+
+        num_layers, state_size, vocab_size = getConfig("saves")
+        readTargetFile(args.input)
+        g = buildGraph(
+            num_steps=1, 
+            num_layers=num_layers, 
+            state_size=state_size, 
+            batch_size=1, 
+            learning_rate=0.001, 
+            num_classes= vocab_size)
         generateCharacters(g, "saves/lstm_result", 750, prompt=u'楊', pick_top_chars=args.pick_top_chars)
 
 if __name__ == "__main__":
