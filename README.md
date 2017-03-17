@@ -1,4 +1,4 @@
-# Tensorflow-LSTM 
+# TensorFlow-LSTM 
 
 ## Description   
 This is my practice to understand LSTM and usage of tensorflow. 
