@@ -241,6 +241,8 @@ def main():
     help="state_size")
     parser.add_argument("-p", "--pick_top_chars", type=int, default=5,
     help="pick number of top probability of chars")
+    parser.add_argument("-c", "--num_chars", type=int, default=500,
+    help="number of characters to generate")
     parser.add_argument("-i", "--input", type=str,
     help="training file")
     parser.add_argument("-o", "--output",type=str,
@@ -275,7 +277,7 @@ def main():
             learning_rate=args.learning_rate, 
             num_classes=vocab_size)
 
-        generateCharacters(g, "saves/lstm_result", 750, prompt=u'楊', pick_top_chars=args.pick_top_chars)
+        generateCharacters(g, "saves/lstm_result", args.num_chars, prompt=u'楊', pick_top_chars=args.pick_top_chars)
 
     else:
         print('Predicting ......')
@@ -289,7 +291,7 @@ def main():
             batch_size=1, 
             learning_rate=0.001, 
             num_classes= vocab_size)
-        generateCharacters(g, "saves/lstm_result", 750, prompt=u'楊', pick_top_chars=args.pick_top_chars)
+        generateCharacters(g, "saves/lstm_result", args.num_chars, prompt=u'楊', pick_top_chars=args.pick_top_chars)
 
 if __name__ == "__main__":
     main()
