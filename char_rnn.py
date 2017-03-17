@@ -225,7 +225,7 @@ def main():
     parser = argparse.ArgumentParser(
     description="",
     )
-    parser.add_argument("-m", "--mode", type=str, default=None,
+    parser.add_argument("-m", "--mode", type=str, default="train",
     help="train mode or predict")
     parser.add_argument("-t", "--num_time_steps", type=int, default=100,
     help="number of time steps")
