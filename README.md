@@ -1,14 +1,12 @@
-# Tensorflow-LSTM
-
+# Tensorflow-LSTM 
 
 ## Description   
 This is my practice to understand LSTM and usage of tensorflow. 
 
-The repo use LSTM cell to train Jin-Yong novel, which is written by famous Chinese novelist. I choose character-level language as model and generate a short paragraph to see if it works well or not.  
+The repo use LSTM cell to read novel "The Romance of the Condor Heroes" (神鵰俠侶), which is written by famous Chinese novelist Jin-Yong. I choose character-level language as model and generate a short paragraph to see if it works well or not.  
 
+## Data 
 
-## Data
-  
 ## How to use  
 
 
