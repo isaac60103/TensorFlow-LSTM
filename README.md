@@ -15,8 +15,13 @@ Dataset is available [here](https://drive.google.com/open?id=0BxIKcHMvdD_UR2d3TG
 ```
 python char_rnn.py -m train -t 100 -l 3 --num_epochs 20 -i ./data/romance_condor_heroes.txt
 ```
+### Generating
 
-#### Default parameters (if not specify):
+```
+python char_rnn.py -m predict -i data/total.txt
+```
+
+### Default parameters (if not specify):
 * mode = train  
 * number of time steps = 100  
 * number of layers = 3  
@@ -30,12 +35,6 @@ If you want to change some of these parameters, please reference to the argument
 
 ```
 python char_rnn.py -h 
-```
-
-### Generating
-
-```
-python char_rnn.py -m predict -i data/total.txt
 ```
 
 
@@ -58,12 +57,12 @@ python char_rnn.py -m predict -i data/total.txt
 I reference a lot of documents. Here are some of them that is highly recommended if you are interested in RNN.
 
 ### Papers
-[Long Short-Term Memory][1]
-[Learning to Forget: Continual Prediction with LSTM][2]
-[An Empirical Exploration of Recurrent Network Architectures][3]
-[LSTM: A Search Space Odyssey][4]
-[On the Computational Power of Neral Nets][5]
-[Neural Turing Machines][6]
+[Long Short-Term Memory][1]  
+[Learning to Forget: Continual Prediction with LSTM][2]  
+[An Empirical Exploration of Recurrent Network Architectures][3]  
+[LSTM: A Search Space Odyssey][4]  
+[On the Computational Power of Neral Nets][5]  
+[Neural Turing Machines][6]  
 
 ### Blogs
 [The Unreasonable Effectiveness of Recurrent Neural Networks (Andrej Karpathy blog)][7]  
