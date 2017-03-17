@@ -13,12 +13,12 @@ Dataset is available [here](https://drive.google.com/open?id=0BxIKcHMvdD_UR2d3TG
 ### Training   
 
 ```
-python char_rnn.py -m train -t 100 -l 3 --num_epochs 20 -i ./data/romance_condor_heroes.txt
+python char_rnn.py -m train -t 100 -l 3 --num_epochs 20 -i data/romance_condor_heroes.txt
 ```
 ### Generating
 
 ```
-python char_rnn.py -m predict -i data/total.txt
+python char_rnn.py -m generate -i data/romance_condor_heroes.txt
 ```
 
 ### Default parameters (if not specify):
