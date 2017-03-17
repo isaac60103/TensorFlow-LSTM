@@ -21,10 +21,10 @@ The repo use LSTM cell to train Jin-Yong novel, which is written by famous Chine
 ## Reference  
 I reference a lot of document to implement this code. Here are some of documents that is highly recommended if you are interested in RNN
 
-[The Unreasonable Effectiveness of Recurrent Neural Networks by Andrej Karpathy blog][1]
-[Understanding LSTM Networks colah's blog][2]
-[Recurrent Neural Networks in Tensorflow by R2RT blog][3]
-[Written Memories: Understanding, Deriving and Extending the LSTM by R2RT blog][4]
+[The Unreasonable Effectiveness of Recurrent Neural Networks (Andrej Karpathy blog)][1]  
+[Understanding LSTM Networks (colah's blog)][2]  
+[Recurrent Neural Networks in Tensorflow (R2RT blog)][3]  
+[Written Memories: Understanding, Deriving and Extending the LSTM (R2RT blog)][4]  
 
 
 [1]: http://karpathy.github.io/2015/05/21/rnn-effectiveness/
