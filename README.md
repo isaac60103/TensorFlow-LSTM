@@ -3,7 +3,7 @@
 ## Description   
 This is my practice to understand LSTM and usage of tensorflow. 
 
-The repo use LSTM cell to read novel "The Romance of the Condor Heroes" (神鵰俠侶), which is written by famous Chinese novelist Jin-Yong. I choose character-level language as model and generate a short paragraph to see if it works well or not.  
+The repo use LSTM cell to read novel "The Romance of the Condor Heroes" (神鵰俠侶), which is written by famous Chinese novelist Jin-Yong. I choose character-level language model to generate a short paragraph to see if it works well or not.  
 
 ## Dataset
 Dataset is available [here](https://drive.google.com/open?id=0BxIKcHMvdD_UR2d3TG51MmM3NDg) and all of them are downloaded from [this website](http://98book.com/books/novelbook_99970.html). The whole file of "The Romance of the Condor Heroes" is about 2.8M.
