@@ -95,8 +95,9 @@ def buildGraph( state_size, num_classes, batch_size, num_steps, num_layers, lear
 
     rnn_inputs = tf.nn.embedding_lookup(embeddings, x)
 
-    cell = tf.nn.rnn_cell.LSTMCell(state_size, state_is_tuple=True)
-    cell = tf.nn.rnn_cell.MultiRNNCell([cell] * num_layers, state_is_tuple=True)
+
+    cell = tf.contrib.rnn.LSTMCell(state_size, state_is_tuple=True)
+    cell = tf.contrib.rnn.MultiRNNCell([cell] * num_layers, state_is_tuple=True)
 
     init_state = cell.zero_state(batch_size, tf.float32)
     rnn_outputs, final_state = tf.nn.dynamic_rnn(cell, rnn_inputs, initial_state=init_state)
@@ -112,7 +113,7 @@ def buildGraph( state_size, num_classes, batch_size, num_steps, num_layers, lear
 
     predictions = tf.nn.softmax(logits)
 
-    total_loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits, y_reshaped))
+    total_loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=y_reshaped))
     train_step = tf.train.AdamOptimizer(learning_rate).minimize(total_loss)
 
     return dict(
@@ -188,7 +189,8 @@ def readTargetFile(training_file):
     
     with open(training_file,'r') as f:
         raw_data =  f.read()
-        raw_data = unicode(raw_data, 'utf8')
+        raw_data = str(raw_data)
+        print(raw_data)
 
     global vocab
     global vocab_size 
