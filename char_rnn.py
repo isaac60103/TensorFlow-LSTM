@@ -6,12 +6,28 @@ import tensorflow as tf
 import os
 import argparse
 import re
+import collections
 
 vocab = None
 vocab_size = None
 idx_to_vocab = None
 vocab_to_idx = None
 data = None
+
+class OrderedSet(collections.Set):
+
+    def __init__(self, iterable=()):
+        self.d = collections.OrderedDict.fromkeys(iterable)
+
+    def __len__(self):
+        return len(self.d)
+
+    def __contains__(self, element):
+        return element in self.d
+
+    def __iter__(self):
+        return iter(self.d)
+
 
 def ptb_iterator(raw_data, batch_size, num_steps):
     """Iterate on the raw PTB data.
@@ -189,8 +205,8 @@ def readTargetFile(training_file):
     
     with open(training_file,'r') as f:
         raw_data =  f.read()
-        raw_data = str(raw_data)
-        print(raw_data)
+        raw_data = list(raw_data)
+
 
     global vocab
     global vocab_size 
@@ -198,7 +214,8 @@ def readTargetFile(training_file):
     global vocab_to_idx
     global data
 
-    vocab = set(raw_data)
+    #vocab = set(raw_data)
+    vocab = OrderedSet(raw_data)
     vocab_size = len(vocab)
     idx_to_vocab = dict(enumerate(vocab))
     vocab_to_idx = dict(zip(idx_to_vocab.values(), idx_to_vocab.keys()))
@@ -206,6 +223,7 @@ def readTargetFile(training_file):
     data = [vocab_to_idx[c] for c in raw_data]
 
     print("Total data length:", len(raw_data))
+    print(idx_to_vocab)
 
     del raw_data
     return
